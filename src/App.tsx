@@ -1,5 +1,3 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Login from './Login/Login';
 import Otp from './OTP/Otp';
@@ -8,6 +6,9 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import {Toaster} from 'react-hot-toast'
 import EmployeeComponents from './EmployeeComponents/EmployeeComponents';
 import HrComponents from './HrComponents/HrComponents';
+import NotFound from './NotFound/NotFound';
+
+
 function App() {
   return (
 
@@ -18,8 +19,12 @@ function App() {
     <Route path='/' element={<Register/>} ></Route>
     <Route path='/login' element={<Login/>} ></Route>
     <Route path='/otp' element={<Otp/>}></Route>
-    <Route path="/employeeDashboard" element={<EmployeeComponents/>}></Route>
+
     <Route path='/hrDashboard' element={<HrComponents/>}></Route>
+    <Route path='employee/*' element= {<EmployeeComponents/> }> </Route>
+    <Route path='*' element={<NotFound/>}></Route>
+
+
 
    </Routes>
    

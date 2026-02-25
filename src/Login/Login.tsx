@@ -28,7 +28,7 @@ toast.success("User succesfully logged in");
 
 
 setTimeout(()=>{
-navigate('/employeeDashboard')
+navigate('/employee')
 },2000)
 
 } catch (error:any) {
