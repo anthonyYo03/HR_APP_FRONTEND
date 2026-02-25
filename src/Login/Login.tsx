@@ -32,7 +32,7 @@ navigate('/employee')
 },2000)
 
 } catch (error:any) {
-  toast.error(error?.response?.data?.response)
+  toast.error(error?.response?.data?.response || "Failed to Log in");
 }
 finally{
 setLoading(false);
@@ -78,7 +78,7 @@ setLoading(false);
   </div>
 
 
-<button className='btn btn-primary' type='submit'>
+<button className='btn btn-primary' type='submit' disabled={loading}>
   
 
 

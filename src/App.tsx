@@ -4,9 +4,22 @@ import Otp from './OTP/Otp';
 import Register from './Register/Register';
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import {Toaster} from 'react-hot-toast'
-import EmployeeComponents from './EmployeeComponents/EmployeeComponents';
-import HrComponents from './HrComponents/HrComponents';
 import NotFound from './NotFound/NotFound';
+
+import EmployeeComponents from './EmployeeComponents/EmployeeComponents';
+import EmployeeDashboard from './EmployeeComponents/Dashboard/EmployeeDashboard';
+import EmployeeReportIssues from './EmployeeComponents/ReportIssues/EmployeeReportIssues';
+import EmployeeRequest from './EmployeeComponents/Request/EmployeeRequest';
+import EmployeeTask from './EmployeeComponents/Task/EmployeeTask';
+
+import HrComponents from './HrComponents/HrComponents';
+import HrAnnouncement from './HrComponents/Announcement/HrAnnouncement';
+import HrDashboard from './HrComponents/Dashboard/HrDashboard';
+import HrReportIssues from './HrComponents/ReportIssues/HrReportIssues';
+import HrRequest from './HrComponents/Request/HrRequest';
+import HrTask from './HrComponents/Task/HrTask';
+
+
 
 
 function App() {
@@ -20,8 +33,23 @@ function App() {
     <Route path='/login' element={<Login/>} ></Route>
     <Route path='/otp' element={<Otp/>}></Route>
 
-    <Route path='/hrDashboard' element={<HrComponents/>}></Route>
-    <Route path='employee/*' element= {<EmployeeComponents/> }> </Route>
+   
+    
+    <Route path='employee' element= {<EmployeeComponents/> }>
+    <Route path='dashboard' element={<EmployeeDashboard/>} ></Route>
+    <Route path='reportIssue' element={<EmployeeReportIssues/>} ></Route>
+    <Route path='request' element={<EmployeeRequest/>}></Route>
+    <Route path='task' element={<EmployeeTask/>}></Route>
+    </Route>
+
+    <Route path='hr' element={<HrComponents/>}>
+      <Route path='announcement' element={<HrAnnouncement/>}></Route>
+      <Route path='dashboard' element={<HrDashboard/>}></Route>
+      <Route path='reportIssue' element={<HrReportIssues/>}></Route>
+      <Route path='request' element={<HrRequest/>}></Route>
+      <Route path='task' element={<HrTask/>}></Route>
+    </Route>
+
     <Route path='*' element={<NotFound/>}></Route>
 
 
