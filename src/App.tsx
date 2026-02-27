@@ -19,7 +19,10 @@ import HrReportIssues from './HrComponents/ReportIssues/HrReportIssues';
 import HrRequest from './HrComponents/Request/HrRequest';
 import HrTask from './HrComponents/Task/HrTask';
 
-
+import CreateAnnouncement from './HrComponents/Announcement/AnnouncementFunctions/CreateAnnouncement';
+import GetOneAnnouncement from './HrComponents/Announcement/AnnouncementFunctions/GetOneAnnouncement';
+import GetAnnouncement from './HrComponents/Announcement/AnnouncementFunctions/GetAnnouncement';
+import EditAnnouncement from './HrComponents/Announcement/AnnouncementFunctions/EditAnnouncement';
 
 
 function App() {
@@ -48,6 +51,10 @@ function App() {
       <Route path='reportIssue' element={<HrReportIssues/>}></Route>
       <Route path='request' element={<HrRequest/>}></Route>
       <Route path='task' element={<HrTask/>}></Route>
+      <Route path='createAnnouncement' element={<CreateAnnouncement/>} ></Route>
+      <Route path='getOneAnnouncement/:id' element={<GetOneAnnouncement/>} ></Route>
+      <Route path='announcement' element={<GetAnnouncement/>}></Route>
+      <Route path='editannouncement/:id' element={<EditAnnouncement/>}></Route>
     </Route>
 
     <Route path='*' element={<NotFound/>}></Route>
