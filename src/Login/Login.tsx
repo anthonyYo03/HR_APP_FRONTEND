@@ -22,17 +22,25 @@ setLoading(true);
 
 try {
   
-  await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`,login,{withCredentials:true})
+const response=await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`,login,{withCredentials:true})
 
 toast.success("User succesfully logged in");
 
+  const role = response.data.role; 
 
-setTimeout(()=>{
-navigate('/employee')
-},2000)
+   if (role === "Employee") {
+  setTimeout(()=>{
+  navigate('/employee');
+  },1000);
+} else if (role === "HR") {
+  setTimeout(()=>{
+  navigate('/hr');
+  },1000);
+}
 
+console.log(response.data);
 } catch (error:any) {
-  toast.error(error?.response?.data?.response || "Failed to Log in");
+  toast.error(error?.response?.data?.message|| "Failed to Log in");
 }
 finally{
 setLoading(false);

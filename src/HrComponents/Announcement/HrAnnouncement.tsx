@@ -16,6 +16,8 @@ export default function HrAnnouncement() {
 
 
 
+
+
 // router.post('/create',verifyToken,OnlyHR,announcementControllers.createAnnouncement);
 // router.get('/getAll',verifyToken,announcementControllers.getAllAnnouncement)
 // router.get('/getOne/:id',verifyToken,announcementControllers.getOneAnnouncement);

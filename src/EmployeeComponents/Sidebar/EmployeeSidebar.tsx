@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link,Outlet, useNavigate } from "react-router-dom";
-import { MdDashboard } from "react-icons/md";
+import { MdAnnouncement } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 import { MdRequestPage } from "react-icons/md";
 import { MdTask } from "react-icons/md";
@@ -26,9 +26,9 @@ export default function EmployeeSidebar() {
         <h4 className="mb-4">My App</h4>
         <ul className="nav flex-column">
           <li className="nav-item mb-2">
-            <Link className="nav-link text-dark" to="/employee/dashboard">
-            <MdDashboard size={22}/>
-              Dashboard
+            <Link className="nav-link text-dark" to="/employee/announcement">
+            <MdAnnouncement size={22}/>
+             Announcement
             </Link>
           </li>
 

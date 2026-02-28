@@ -18,6 +18,7 @@ try {
 e.preventDefault();
 if(!announcement.title.trim() || !announcement.description.trim() ){
 toast.error("Please fill title and description fields");
+return;
 
 }
 
