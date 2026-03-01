@@ -30,6 +30,8 @@ import GetOneIssue from './EmployeeComponents/ReportIssues/ReportIssuesFunctions
 import GetAnnouncementEmployee from './EmployeeComponents/Announcement/GetAnnouncementsEmployee';
 import CreateIssues from './EmployeeComponents/ReportIssues/ReportIssuesFunctions/CreateIssues';
 
+import GetOneIssueHr from './HrComponents/ReportIssues/ReportIssuesFunction/GetOneIssue';
+
 
 function App() {
   return (
@@ -58,6 +60,7 @@ function App() {
       <Route path='announcement' element={<HrAnnouncement/>}></Route>
       <Route path='dashboard' element={<HrDashboard/>}></Route>
       <Route path='reportIssue' element={<HrReportIssues/>}></Route>
+      <Route path='oneIssue/:id' element={<GetOneIssueHr/>}></Route>
       <Route path='request' element={<HrRequest/>}></Route>
       <Route path='task' element={<HrTask/>}></Route>
       <Route path='createAnnouncement' element={<CreateAnnouncement/>} ></Route>

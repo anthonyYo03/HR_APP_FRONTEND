@@ -32,10 +32,10 @@ fetchIssues();
     {issues.map((issues) => (
       <div key={issues._id} className="card mb-3" onClick={() => navigate(`/employee/oneIssue/${issues._id}`)} >
         <div className="card-body">
-          <h5 className="card-title">{issues.title}</h5>
-          <p className="card-text">{issues.description}</p>
-          <p className="card-text">{issues.priority}</p>
-          <p className="card-text">{issues.status}</p>
+          <h5 className="card-title"> <span>Title :</span> {issues.title}</h5>
+          <p className="card-text">   <span>Description :</span> {issues.description}</p>
+          <p className="card-text">   <span>Priority :</span> {issues.priority}</p>
+          <p className="card-text">   <span>Status :</span> {issues.status}</p>
         </div>
       </div>
     ))}

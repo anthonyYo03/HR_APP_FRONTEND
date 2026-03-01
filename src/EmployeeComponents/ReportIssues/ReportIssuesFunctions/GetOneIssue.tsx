@@ -3,7 +3,7 @@ import { useParams,useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { myIssues } from "../../../types/Issues";
-
+import DeleteIssue from "./DeleteIssue";
 
 
 export default function GetOneIssue() {
@@ -49,7 +49,7 @@ export default function GetOneIssue() {
     </div>
     
 <button className='btn btn-secondary' onClick={()=>{BackButton()}}>Back</button>
-    
+<DeleteIssue id={issue._id}/>
 </>
   );
 
