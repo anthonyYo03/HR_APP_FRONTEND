@@ -36,7 +36,7 @@ import CreateTaskHR from './HrComponents/Task/TaskFunctions/CreateTaskHR';
 
 import GetOneTaskHR from './HrComponents/Task/TaskFunctions/GetOneTaskHR';
 
-
+import GetOneTaskEmployee from './EmployeeComponents/Task/TasksFunction/GetOneTaskEmployee';
 import UpdateTaskHR from './HrComponents/Task/TaskFunctions/UpdateTaskHR';
 function App() {
   return (
@@ -59,6 +59,7 @@ function App() {
     <Route path='getOneAnnouncement/:id' element={<GetOneAnnouncementEmployee/>}></Route>
     <Route path='createIssue' element={<CreateIssues/>}></Route>
     <Route path='oneIssue/:id' element={<GetOneIssue/>}></Route>
+    <Route path='getOnetask/:id' element={<GetOneTaskEmployee/>}></Route>
     </Route>
 {/* announcement */}
     <Route path='hr' element={<HrComponents/>}>

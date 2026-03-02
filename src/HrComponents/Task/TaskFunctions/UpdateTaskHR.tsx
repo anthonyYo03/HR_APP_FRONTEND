@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate ,useLocation } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { CreateTask, getAllTask } from '../../../types/task';
@@ -12,6 +12,8 @@ interface User {
 export default function UpdateTaskHR() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
 
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
@@ -19,23 +21,35 @@ export default function UpdateTaskHR() {
 
   // Fetch task data on mount
   useEffect(() => {
+     const stateTask = location.state?.task as getAllTask | undefined;
+
+      if (stateTask) {
+    setTask({
+      name: stateTask.name,
+      description: stateTask.description,
+      status: stateTask.status,
+      dueDate: stateTask.dueDate,
+      priority: stateTask.priority,
+      assignedTo: stateTask.assignedTo,
+    });
+    return; // skip the API call
+  }
     const fetchTask = async () => {
       try {
         const res = await axios.get<{ oneTask: getAllTask }>(
           `${process.env.REACT_APP_BACKEND_URL}/task/getOne/${id}`,
           { withCredentials: true }
         );
+        const t = res.data.oneTask; // ← you're missing this
+    setTask({                   // ← and this
+      name: t.name,
+      description: t.description,
+      status: t.status,
+      dueDate: t.dueDate,
+      priority: t.priority,
+      assignedTo: t.assignedTo,
+    });
 
-        const t = res.data.oneTask;
-
-        setTask({
-          name: t.name,
-          description: t.description,
-          status: t.status,
-          dueDate: t.dueDate,
-          priority: t.priority,
-          assignedTo: t.assignedTo, // { _id, username }
-        });
       } catch (err) {
         toast.error("Cannot load task");
       }

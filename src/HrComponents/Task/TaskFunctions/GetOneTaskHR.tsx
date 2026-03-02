@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState,useEffect } from 'react';
 import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -8,10 +7,6 @@ import DeleteTaskHR from './DeleteTaskHR';
 
 
 
-
-interface GetOneTaskResponse {
-  oneTask: getAllTask;
-}
 
 export default function GetOneTaskHR() {
  const [task, setOneTask] = useState<getAllTask | null>(null);
@@ -25,11 +20,11 @@ export default function GetOneTaskHR() {
     const fetchOneTask = async () => {
         setloading(true);
       try {
-        const res = await axios.get<GetOneTaskResponse>(
+        const res = await axios.get<getAllTask>(
           `${process.env.REACT_APP_BACKEND_URL}/task/getOne/${id}`,
           { withCredentials: true }
         );
-        setOneTask(res.data.oneTask);
+        setOneTask(res.data);
         console.log(res.data);
       } catch (error) {
         toast.error("Cannot get Task");
@@ -69,7 +64,7 @@ export default function GetOneTaskHR() {
     
     
 <button className='btn btn-secondary' onClick={()=>{BackButton()}}>Back</button>
-<button onClick={()=>{navigate(`/hr/editOneTask/${id}`)}}>Update</button>
+<button onClick={() => navigate(`/hr/editOneTask/${id}`, { state: { task } })}>Update</button>
 
 <DeleteTaskHR id={task._id}/>
 </>
