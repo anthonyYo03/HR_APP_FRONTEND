@@ -33,7 +33,7 @@ fetchMyTasks();
       <div key={myTasks._id} className="card mb-3" onClick={() => navigate(`/employee/getOnetask/${myTasks._id}`)} >
         <div className="card-body">
           <h5 className="card-title"> <span>Title :</span> {myTasks.name}</h5>
-           <h5 className="card-title"> <span>Created By :</span> {myTasks.assignedTo.username}</h5>
+           <h5 className="card-title"> <span>Created By :</span> {myTasks.createdBy.username}</h5>
           <p className="card-text">   <span>Description :</span> {myTasks.description}</p>
           <p className="card-text">   <span>Priority :</span> {myTasks.priority}</p>
           <p className="card-text">   <span>Status :</span> {myTasks.status}</p>

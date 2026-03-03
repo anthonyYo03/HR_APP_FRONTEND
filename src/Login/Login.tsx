@@ -108,6 +108,9 @@ Logging In...
 
 </button>
     <p>Don't have an account ? <Link to="/">Sign Up</Link> now </p>
+    <div>
+    <Link to="/forgot-password">Forgot your password?</Link>
+    </div>
     </form>
     </>
   )

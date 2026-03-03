@@ -44,7 +44,8 @@ import CreateRequestEmployee from './EmployeeComponents/Request/RequestFunctions
 
 import GetOneRequestEmployee from './EmployeeComponents/Request/RequestFunctions/GetOneRequestEmployee';
 import GetOneRequestHR from './HrComponents/Request/RequestFunction/GetOneRequestHR';
-
+import ForgotPassword from './ForgetPassword/ForgetPassword';
+import ResetPassword from './ResetPassword/ResetPassword';
 
 function App() {
   return (
@@ -56,7 +57,8 @@ function App() {
     <Route path='/' element={<Register/>} ></Route>
     <Route path='/login' element={<Login/>} ></Route>
     <Route path='/otp' element={<Otp/>}></Route>
-
+     <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
+     <Route path='/reset-password' element={<ResetPassword/>}></Route>
    
     
     <Route path='employee' element= {<EmployeeComponents/> }>
