@@ -67,7 +67,8 @@ export default function GetOneTaskEmployee() {
     
     
 <button className='btn btn-secondary' onClick={()=>{BackButton()}}>Back</button>
-{/* <button onClick={() => navigate(`/hr/editOneTask/${id}`, { state: { task } })}>Update</button> */}
+<button onClick={() => navigate(`/employee/updateTaskStatus/${id}`, { state: { task } })}>Update</button>
+
 
 
 </>

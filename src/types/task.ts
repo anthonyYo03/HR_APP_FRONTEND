@@ -12,7 +12,9 @@ username:string
 }
 
 
-
+export interface updateTaskStatus{
+status:"pending"|"in-progress"|"completed"
+}
 
 
 

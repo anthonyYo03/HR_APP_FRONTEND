@@ -24,7 +24,7 @@ export default function GetOneIssue() {
         );
         setOneIssue(res.data);
       } catch (error) {
-        toast.error("Cannot get announcement");
+        toast.error("Cannot get Issue");
       }
       finally{
         setloading(false);

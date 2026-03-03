@@ -38,6 +38,14 @@ import GetOneTaskHR from './HrComponents/Task/TaskFunctions/GetOneTaskHR';
 
 import GetOneTaskEmployee from './EmployeeComponents/Task/TasksFunction/GetOneTaskEmployee';
 import UpdateTaskHR from './HrComponents/Task/TaskFunctions/UpdateTaskHR';
+import UpdateTasksStatusEmployee from './EmployeeComponents/Task/TasksFunction/UpdateTasksStatusEmployee';
+
+import CreateRequestEmployee from './EmployeeComponents/Request/RequestFunctions/CreateRequestEmployee';
+
+import GetOneRequestEmployee from './EmployeeComponents/Request/RequestFunctions/GetOneRequestEmployee';
+import GetOneRequestHR from './HrComponents/Request/RequestFunction/GetOneRequestHR';
+
+
 function App() {
   return (
 
@@ -60,6 +68,9 @@ function App() {
     <Route path='createIssue' element={<CreateIssues/>}></Route>
     <Route path='oneIssue/:id' element={<GetOneIssue/>}></Route>
     <Route path='getOnetask/:id' element={<GetOneTaskEmployee/>}></Route>
+    <Route path='updateTaskStatus/:id' element={<UpdateTasksStatusEmployee/>}></Route>
+    <Route path='createRequest' element={<CreateRequestEmployee/>}></Route>
+    <Route path='getOneRequest/:id' element={<GetOneRequestEmployee/>}></Route>
     </Route>
 {/* announcement */}
     <Route path='hr' element={<HrComponents/>}>
@@ -76,6 +87,7 @@ function App() {
       <Route path='createTask' element={<CreateTaskHR/>}></Route>
       <Route path='oneTask/:id' element={<GetOneTaskHR/>}></Route>
       <Route path='editOneTask/:id' element={<UpdateTaskHR/>}></Route>
+      <Route path='getOneRequest/:id'     element={<GetOneRequestHR/>}></Route>
       {/* UpdateTaskHR */}
     </Route>
 
