@@ -1,88 +1,57 @@
-import { useState } from "react";
-import { Link,Outlet,useNavigate } from "react-router-dom";
-import { MdDashboard } from "react-icons/md";
-import { MdAnnouncement } from "react-icons/md";
-import { MdLogout } from "react-icons/md";
-import { MdRequestPage } from "react-icons/md";
-import { MdTask } from "react-icons/md";
-import { MdReport } from "react-icons/md";
-import { handleLogout } from "../../Logout/Logout";
-
+import { useState } from 'react';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { MdDashboard, MdAnnouncement, MdLogout, MdRequestPage, MdTask, MdReport, MdMenu } from 'react-icons/md';
+import { handleLogout } from '../../Logout/Logout';
+import NotificationBell from '../../NotificationBell/NotificationBell';
 
 export default function HrSidebar() {
-  const [isOpen, setIsOpen] = useState(true); // For mobile toggle
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navigate=useNavigate();
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const active = (path: string) => location.pathname.startsWith(path) ? 'active' : '';
 
   return (
-    <div className="d-flex">
-      {/* Sidebar */}
-      <div
-        className={`bg-light border-end p-3 ${
-          isOpen ? "d-block" : "d-none d-md-block"
-        }`}
-        style={{ width: "250px", minHeight: "100vh" }}
-      >
-        <h4 className="mb-4">My App</h4>
-        <ul className="nav flex-column">
-          <li className="nav-item mb-2">
-            <Link className="nav-link text-dark" to="/hr/dashboard">
-              <MdDashboard size={22} />
-              Dashboard
-            </Link>
-          </li>
-          <li className="nav-item mb-2">
-            <Link className="nav-link text-dark" to="/hr/announcement">
-            <MdAnnouncement size={22} />
-              Announcements
-            </Link>
-          </li>
+    <div className="app-layout">
+      <aside className={`app-sidebar ${mobileOpen ? 'open' : ''}`}>
+        <div className="sidebar-brand">
+          <h1 className="sidebar-brand-title">HR <span>Portal</span></h1>
+          <NotificationBell />
+        </div>
+        <nav className="sidebar-nav">
+          <Link className={`sidebar-link ${active('/hr/dashboard')}`} to="/hr/dashboard">
+            <MdDashboard size={19} /> Dashboard
+          </Link>
+          <Link className={`sidebar-link ${active('/hr/announcement')}`} to="/hr/announcement">
+            <MdAnnouncement size={19} /> Announcements
+          </Link>
+          <Link className={`sidebar-link ${active('/hr/request')}`} to="/hr/request">
+            <MdRequestPage size={19} /> Requests
+          </Link>
+          <Link className={`sidebar-link ${active('/hr/task')}`} to="/hr/task">
+            <MdTask size={19} /> Tasks
+          </Link>
+          <Link className={`sidebar-link ${active('/hr/reportIssue')}`} to="/hr/reportIssue">
+            <MdReport size={19} /> Report Issues
+          </Link>
+        </nav>
+        <div className="sidebar-logout">
+          <button className="sidebar-link" onClick={() => handleLogout(navigate)}>
+            <MdLogout size={19} /> Logout
+          </button>
+        </div>
+      </aside>
 
-             <li className="nav-item mb-2">
-    <Link className="nav-link text-dark" to="/hr/request">
-    <MdRequestPage size={22} />
-      Requests
-    </Link>
-  </li>
-  <li className="nav-item mb-2">
-    <Link className="nav-link text-dark" to="/hr/task">
-    <MdTask size={22}/>
-      Tasks
-    </Link>
-  </li>
-  <li className="nav-item mb-2">
-    <Link className="nav-link text-dark" to="/hr/reportIssue">
-    <MdReport size={22}/>
-      Report Issues
-    </Link>
-  </li>
-
-
-          <li className="nav-item mb-2">
-            <span className="nav-link text-dark"
-             style={{ cursor: "pointer" }}
-             onClick={() => handleLogout(navigate)}>
-            <MdLogout size={22}/>
-              Logout
-            </span>
-          </li>
-        </ul>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-grow-1">
-        {/* Mobile toggle button */}
+      <main className="app-content">
         <button
-          className="btn btn-primary d-md-none m-2"
-          onClick={toggleSidebar}
+          className="sidebar-open-btn"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          style={{ display: 'none' }}
         >
-          {isOpen ? "Close Menu" : "Open Menu"}
+          <MdMenu size={22} />
         </button>
-       <Outlet />
-      </div>
+        <Outlet />
+      </main>
     </div>
   );
 }

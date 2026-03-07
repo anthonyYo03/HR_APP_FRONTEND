@@ -6,7 +6,8 @@ description:string
 export interface getAnnouncement{
 _id:string,
 title:string,
-description:string
+description:string,
+createdAt:string
 }
 
 export interface deleteOneAnnouncement{

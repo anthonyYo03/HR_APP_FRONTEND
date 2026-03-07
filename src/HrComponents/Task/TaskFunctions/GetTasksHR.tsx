@@ -1,49 +1,70 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getAllTask } from '../../../types/task';
+import { MdTask } from 'react-icons/md';
+
+const badge = (v: string) => {
+  const m: Record<string, string> = {
+    pending: 'pending', 'in-progress': 'in-progress', completed: 'completed',
+    low: 'low', medium: 'medium', high: 'high',
+  };
+  return `badge-status badge-${m[v] || 'pending'}`;
+};
+
+const fmt = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
 export default function GetTasksHR() {
- const [tasks, setTasks] = useState<getAllTask[]>([]);
-const navigate=useNavigate();
-useEffect(() => {
-  const fetchIssues = async () => {
-  try {
-    const res = await axios.get<getAllTask[] >(
-      `${process.env.REACT_APP_BACKEND_URL}/task/getAll`,
-      { withCredentials: true }
+  const [tasks, setTasks] = useState<getAllTask[]>([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get<getAllTask[]>(`${process.env.REACT_APP_BACKEND_URL}/task/getAll`, { withCredentials: true })
+      .then((res) => setTasks(res.data))
+      .catch(() => toast.error('Cannot get tasks'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <div className="state-loading"><div className="state-spinner" /></div>;
+
+  if (tasks.length === 0)
+    return (
+      <div className="state-empty">
+        <div className="state-empty-icon"><MdTask /></div>
+        <p>No tasks yet. Create the first one!</p>
+      </div>
     );
-    console.log("Task Response",res.data);
-    setTasks(res.data);
-  } catch (error) {
-    toast.error("Cannot get Tasks");
-    console.log("ISSUES ERROR:", error); 
-  }
-};
-fetchIssues();
-}, []);
 
   return (
-   <>
-    {tasks.length===0 && <p>No Tasks yet</p>}
-
-    {tasks.map((task) => (
-      <div key={task._id} className="card mb-3"  onClick={() => navigate(`/hr/oneTask/${task._id}`)}>
-        {/* onClick={() => navigate(`/hr/oneTask/${task._id}`)} */}
-        <div className="card-body">
-          <h5 className="card-title"> <span>Task Name :</span> {task.name}</h5>
-          <p className="card-text">   <span>Created By :</span> {task.createdBy.username}</p>
-          <p className="card-text">   <span>Assigned to :</span> {task.assignedTo.username}</p>
-           {/* <p className="card-text">   <span>Reported By :</span> {task.assignedTo.username}</p> */}
-          <p className="card-text">   <span>Description :</span> {task.description}</p>
-          <p className="card-text">   <span>Priority :</span> {task.priority}</p>
-          <p className="card-text">   <span>Status :</span> {task.status}</p>
-          <p className="card-text">   <span>Created At :</span> {task.createdAt}</p>
-          <p className="card-text">   <span>Updated At :</span> {task.updatedAt}</p>
+    <>
+      {tasks.map((t) => (
+        <div key={t._id} className="data-card" onClick={() => navigate(`/hr/oneTask/${t._id}`)}>
+          <div className="data-card-header">
+            <h3 className="data-card-title">{t.name}</h3>
+            <div style={{ display: 'flex', gap: '0.4rem', flexShrink: 0 }}>
+              <span className={badge(t.priority)}>{t.priority}</span>
+              <span className={badge(t.status)}>{t.status}</span>
+            </div>
+          </div>
+          <p className="data-card-meta" style={{ color: '#9a9490', margin: '0 0 0.5rem', fontSize: '0.825rem' }}>
+            {t.description.length > 100 ? t.description.slice(0, 100) + 'â€¦' : t.description}
+          </p>
+          <div className="data-card-meta-row">
+            <span className="data-card-meta">
+              <span className="data-card-label">Assigned to</span>{t.assignedTo?.username}
+            </span>
+            <span className="data-card-meta">
+              <span className="data-card-label">Created by</span>{t.createdBy?.username}
+            </span>
+            <span className="data-card-meta">
+              <span className="data-card-label">Due</span>{fmt(t.dueDate)}
+            </span>
+          </div>
         </div>
-      </div>
-    ))}
-  </>
-  )
+      ))}
+    </>
+  );
 }

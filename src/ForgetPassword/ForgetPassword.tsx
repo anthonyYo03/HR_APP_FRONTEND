@@ -3,7 +3,6 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -13,12 +12,7 @@ export default function ForgotPassword() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    if (!email.trim()) {
-      setError('Please enter your email');
-      return;
-    }
-
+    if (!email.trim()) { setError('Please enter your email'); return; }
     setIsLoading(true);
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/requestPasswordReset`, { email });
@@ -33,60 +27,54 @@ export default function ForgotPassword() {
     }
   };
 
-  const handleBack = () => {
-    navigate('/login');
-  };
-
   return (
-    <>
-     
-      <div className="login-container">
-        <div className="login-card">
-          <div className="login-header">
-            <h1 className="login-title">Forgot Password</h1>
-            <p className="login-subtitle">
-              Enter your email to receive a password reset link
-            </p>
-          </div>
-
-          {error && <div className="error-message show">{error}</div>}
-
+    <div className="reg-root">
+      <div className="reg-card">
+        <div className="reg-panel">
+          <div className="reg-ornament" />
+          <p className="reg-eyebrow">HR Portal</p>
+          <h1 className="reg-heading">Reset <em>Password</em></h1>
+          <p className="reg-sub">Enter your email to receive a reset link</p>
+          <div className="reg-divider" />
+          {error && (
+            <div style={{
+              background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)',
+              borderRadius: '6px', padding: '0.75rem 1rem', marginBottom: '1.25rem',
+              color: '#ef4444', fontSize: '0.85rem',
+            }}>
+              {error}
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
+            <div className="reg-field">
+              <label className="reg-label">Email Address</label>
               <input
                 type="email"
-                id="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="form-control"
+                className="reg-input"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
               />
             </div>
-
-            <div className="button-group">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={handleBack}
-                disabled={isLoading}
-              >
-                Back
-              </button>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Sending...' : 'Send Reset Link'}
-              </button>
-            </div>
+            <button className="reg-btn" type="submit" disabled={isLoading}>
+              {isLoading && <span className="reg-spinner" />}
+              {isLoading ? 'Sendingâ€¦' : 'Send Reset Link'}
+            </button>
           </form>
+          <div className="reg-footer">
+            <button
+              onClick={() => navigate('/login')}
+              style={{
+                background: 'none', border: 'none', color: '#e8c468', cursor: 'pointer',
+                fontSize: '0.82rem', fontFamily: 'DM Sans, sans-serif',
+              }}
+            >
+              Back to Sign In
+            </button>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

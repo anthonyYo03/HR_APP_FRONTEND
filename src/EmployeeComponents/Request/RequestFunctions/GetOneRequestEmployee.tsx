@@ -1,63 +1,84 @@
-import { useParams,useNavigate } from 'react-router-dom';
-import { useState,useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { getRequest } from '../../../types/request';
 import DeleteRequestEmployee from './DeleteRequestEmployee';
 
-export default function GetOneRequestEmployee() {
-  const [requests, setOneRequest] = useState<getRequest | null>(null);
-  const [loading,setloading]=useState(false);
-  const { id } = useParams();
-  const navigate=useNavigate();
-  const BackButton=()=>{
-    navigate('/employee/request');
-  }
-  useEffect(() => {
-    const fetchOneRequest = async () => {
-        setloading(true);
-      try {
-        const res = await axios.get<getRequest>(
-          `${process.env.REACT_APP_BACKEND_URL}/request/getOne/${id}`,
-          { withCredentials: true }
-        );
-        setOneRequest(res.data);
-        console.log(res.data);
-      } catch (error) {
-        toast.error("Cannot get Request");
-      }
-      finally{
-        setloading(false);
-      }
-    };
+const badge = (v: string) => {
+  const m: Record<string, string> = {
+    Pending: 'pending', Approved: 'approved', Rejected: 'rejected',
+    Sick: 'Sick', Vacation: 'Vacation', Casual: 'Casual',
+  };
+  return `badge-status badge-${m[v] || 'pending'}`;
+};
 
-     fetchOneRequest();
+const fmt = (d?: string) =>
+  d ? new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : 'â€”';
+
+export default function GetOneRequestEmployee() {
+  const [request, setOneRequest] = useState<getRequest | null>(null);
+  const [loading, setLoading] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get<getRequest>(`${process.env.REACT_APP_BACKEND_URL}/request/getOne/${id}`, { withCredentials: true })
+      .then((res) => setOneRequest(res.data))
+      .catch(() => toast.error('Cannot get request'))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if(loading) return <p>Getting Request...</p>
-  if (!requests) return <p>Cannot get Request</p>;
+  if (loading) return <div className="state-loading"><div className="state-spinner" /></div>;
+  if (!request) return <div className="state-empty"><p>Request not found</p></div>;
 
   return (
-<>
-
-    
-      <div key={requests._id} className="card mb-3" onClick={() => navigate(`/employee/getOneRequest/${requests._id}`)} >
-        <div className="card-body">
-          <h5 className="card-title"> <span>Reported By :</span> {requests.reportedBy.username}</h5>
-          <p className="card-text">   <span>Leave Type :</span> {requests.leave_type}</p>
-          <p className="card-text">   <span>Reason :</span> {requests.reason}</p>
-          <p className="card-text">   <span>Status :</span> {requests.status}</p>
-          <p className="card-text">   <span>Start Date :</span> {requests.start_date}</p>
-          <p className="card-text">   <span>End Date :</span> {requests.end_date}</p>
-          <p className="card-text">   <span>Approved By :</span> {requests.approvedBy?.username ||'Pending'}</p>
-          <p className="card-text">   <span>Approved Date :</span> {requests?.approvedDate || 'Waiting for the Approval'}</p>
-          <p className="card-text">   <span>Created At :</span> {requests.createdAt}</p>
-          <p className="card-text">   <span>Updated At :</span> {requests.updatedAt}</p>
+    <div className="page-root">
+      <div className="page-header">
+        <h2 className="page-title">{request.leave_type} Leave Request</h2>
+        <button className="btn-ghost" onClick={() => navigate('/employee/request')}>â† Back</button>
+      </div>
+      <div className="detail-card">
+        <div className="detail-grid">
+          <div className="detail-field">
+            <span className="detail-field-label">Leave Type</span>
+            <span className={badge(request.leave_type)}>{request.leave_type}</span>
+          </div>
+          <div className="detail-field">
+            <span className="detail-field-label">Status</span>
+            <span className={badge(request.status)}>{request.status}</span>
+          </div>
+          <div className="detail-field">
+            <span className="detail-field-label">Start Date</span>
+            <span className="detail-field-value">{fmt(request.start_date)}</span>
+          </div>
+          <div className="detail-field">
+            <span className="detail-field-label">End Date</span>
+            <span className="detail-field-value">{fmt(request.end_date)}</span>
+          </div>
+          <div className="detail-field">
+            <span className="detail-field-label">Approved By</span>
+            <span className="detail-field-value">{request.approvedBy?.username || 'Awaiting approval'}</span>
+          </div>
+          <div className="detail-field">
+            <span className="detail-field-label">Approved Date</span>
+            <span className="detail-field-value">{request.approvedDate ? fmt(request.approvedDate) : 'Awaiting approval'}</span>
+          </div>
+          <div className="detail-field">
+            <span className="detail-field-label">Submitted</span>
+            <span className="detail-field-value">{fmt(request.createdAt)}</span>
+          </div>
+          <div className="detail-field" style={{ gridColumn: '1 / -1' }}>
+            <span className="detail-field-label">Reason</span>
+            <span className="detail-field-value" style={{ lineHeight: 1.6 }}>{request.reason}</span>
+          </div>
+        </div>
+        <div className="detail-actions">
+          <DeleteRequestEmployee id={request._id} />
         </div>
       </div>
-    
-<button className='btn btn-secondary' onClick={()=>BackButton()}>Back</button>
-<DeleteRequestEmployee id={requests._id}/>
-</>
-  )
+    </div>
+  );
 }

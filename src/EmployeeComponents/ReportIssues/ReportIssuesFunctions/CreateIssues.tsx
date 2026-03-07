@@ -1,148 +1,85 @@
-import { CreateIssue } from "../../../types/Issues"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast"
-import axios from "axios";
-
-
+import React, { useState } from 'react';
+import { CreateIssue } from '../../../types/Issues';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 export default function CreateIssues() {
-  const [issue,setIssue]=useState<CreateIssue>({title:'',description:'',priority:'medium'});
-const [loading,setLoading]=useState(false)
-const navigate=useNavigate();
+  const [issue, setIssue] = useState<CreateIssue>({ title: '', description: '', priority: 'medium' });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!issue.title.trim() || !issue.description.trim()) {
+      toast.error('Please fill all required fields');
+      return;
+    }
+    setLoading(true);
+    try {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/reportIssue/create`, issue, { withCredentials: true });
+      toast.success('Issue reported successfully');
+      navigate('/employee/reportIssue');
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'Failed to report issue');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const handleCreateAnnouncement=async(e:React.FormEvent)=>{
-try {
-e.preventDefault();
-if(!issue.title.trim() || !issue.description.trim() ){
-toast.error("Please fill title and description fields");
-return;
-
-}
-
-if (!issue.priority) {
-  toast.error("Please select a priority");
-  return;
-}
-
-
-
-setLoading(true);
-await axios.post(`${process.env.REACT_APP_BACKEND_URL}/reportIssue/create`,issue,{withCredentials:true})
-toast.success("Issue created Successfully");
-navigate('/employee/reportIssue');
-
-    
-} catch (error:any) {
-    toast.error(error?.response?.data?.message || "Failed to Create Issue")
-}
-finally{
-    setLoading(false)
-}
-
-
-
-}
-
-const backButton=()=>{
-  navigate('/employee/reportIssue');
-}
+  const priorities: CreateIssue['priority'][] = ['low', 'medium', 'high'];
 
   return (
-    <>
-    
-    <form onSubmit={handleCreateAnnouncement}>
-  <div className="mb-3">
-    <label htmlFor="title" className="form-label">Title</label>
-    <input 
-    type="text" 
-    className="form-control"
-    id="title" 
-    placeholder='Enter title ...'
-    aria-describedby="emailHelp"
-    value={issue.title}
-    onChange={(e)=>{setIssue({...issue,title:e.target.value})}}
-    
-    />
-    
-  </div>
-  <div className="mb-3">
-    <label htmlFor="description" className="form-label">Description</label>
-    <input type="text" 
-    className="form-control" 
-    id="description"
-    placeholder='Enter description ...'
-    value={issue.description}
-    onChange={(e)=>{setIssue({...issue,description:e.target.value})}}
-    
-    />
-  </div>
-
-<div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-  <input 
-   type="radio"
-   className="btn-check" 
-   name="btnradio" 
-   id="btnradio1"
-   value="low"
-   checked={issue.priority==="low"}
-   onChange={(e)=>setIssue({...issue,priority: e.target.value as CreateIssue['priority']})} 
-   disabled={loading}
-   />
-  <label className="btn btn-outline-primary" htmlFor="btnradio1">Low</label>
-
-  <input 
-  type="radio" 
-  className="btn-check" 
-  name="btnradio" 
-  id="btnradio2" 
-   value="medium"                                
-          checked={issue.priority === 'medium'} 
-          onChange={(e) => setIssue({ ...issue, priority: e.target.value as CreateIssue['priority'] })}
-   disabled={loading}
-  
-  />
-  <label className="btn btn-outline-primary" htmlFor="btnradio2">Medium</label>
-
-  <input 
-  type="radio" 
-  className="btn-check" 
-  name="btnradio" 
-  id="btnradio3" 
-  value="high"                                    
-  checked={issue.priority === 'high'}           
-  onChange={(e) => setIssue({ ...issue, priority: e.target.value as CreateIssue['priority'] })}
-  disabled={loading}
-  
-  />
-  <label className="btn btn-outline-primary" htmlFor="btnradio3">High</label>
-
-</div>
-
-
-  <button type='button' className="btn btn-secondary" onClick={backButton}>Back</button>
-  <button type="submit" className="btn btn-primary" disabled={loading}>
-  {loading ?
-<>
-{loading && <span
-      className="spinner-border spinner-border-sm"
-      role="status"
-      aria-hidden="true"
-    /> }
-Creating Issue
-</>:
-<>Create Issue</>
-
-} 
-</button>
-
-
-
-</form>
-    
-
-    
-    </>
-  )
+    <div className="page-root">
+      <div className="page-header">
+        <h2 className="page-title">Report an <span>Issue</span></h2>
+        <button className="btn-ghost" onClick={() => navigate('/employee/reportIssue')}> Back</button>
+      </div>
+      <div className="form-card">
+        <form onSubmit={handleSubmit}>
+          <div className="form-field">
+            <label className="form-lbl" htmlFor="title">Title</label>
+            <input
+              type="text" id="title" className="form-inp"
+              placeholder="Brief issue title"
+              value={issue.title}
+              onChange={(e) => setIssue({ ...issue, title: e.target.value })}
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-lbl" htmlFor="desc">Description</label>
+            <textarea
+              id="desc" className="form-inp" rows={4}
+              placeholder="Describe the issue in details"
+              value={issue.description}
+              onChange={(e) => setIssue({ ...issue, description: e.target.value })}
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-lbl">Priority</label>
+            <div className="form-radio-group">
+              {priorities.map((p) => (
+                <React.Fragment key={p}>
+                  <input
+                    type="radio" className="form-radio-hidden"
+                    id={`p-${p}`} name="priority" value={p}
+                    checked={issue.priority === p}
+                    onChange={() => setIssue({ ...issue, priority: p })}
+                  />
+                  <label className="form-radio-label" htmlFor={`p-${p}`} style={{ textTransform: 'capitalize' }}>{p}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+          <div className="form-actions">
+            <button type="submit" className="btn-gold" disabled={loading}>
+              {loading && <span className="btn-spinner" />}
+              {loading ? 'Submitting...' : 'Report Issue'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
+

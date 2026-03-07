@@ -1,10 +1,13 @@
-import React from 'react'
-import GetAllIssues from './ReportIssuesFunction/GetAllIssues'
+import GetAllIssues from './ReportIssuesFunction/GetAllIssues';
+
 export default function HrReportIssues() {
   return (
-    <>
-    <div>HrReportIssues</div>
-    <GetAllIssues/>
-    </>
-  )
+    <div className="page-root">
+      <div className="page-header">
+        <h2 className="page-title">Reported <span>Issues</span></h2>
+      </div>
+      <GetAllIssues />
+    </div>
+  );
 }
+

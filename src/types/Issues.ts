@@ -11,7 +11,9 @@ _id:string
 title:string, 
 description:string,
 priority: 'low' | 'medium' | 'high';
-status:'pending'|'in_progress'|'resolved'    
+status:'pending'|'in_progress'|'resolved';
+createdAt:string;
+updatedAt:string;
 }
 
 

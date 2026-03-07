@@ -1,56 +1,71 @@
-import { useState,useEffect } from "react";
-import { useParams,useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { myIssues } from "../../../types/Issues";
-import DeleteIssue from "./DeleteIssue";
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { myIssues } from '../../../types/Issues';
+import DeleteIssue from './DeleteIssue';
 
+const badge = (v: string) => {
+  const m: Record<string, string> = {
+    pending: 'pending', in_progress: 'in-progress', resolved: 'resolved',
+    low: 'low', medium: 'medium', high: 'high',
+  };
+  return `badge-status badge-${m[v] || 'pending'}`;
+};
+
+const fmt = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
 export default function GetOneIssue() {
   const [issue, setOneIssue] = useState<myIssues | null>(null);
-  const [loading,setloading]=useState(false);
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const navigate=useNavigate();
-  const BackButton=()=>{
-    navigate('/employee/reportIssue')
-  }
-  useEffect(() => {
-    const fetchOneIssue = async () => {
-        setloading(true);
-      try {
-        const res = await axios.get<myIssues>(
-          `${process.env.REACT_APP_BACKEND_URL}/reportIssue/getOne/${id}`,
-          { withCredentials: true }
-        );
-        setOneIssue(res.data);
-      } catch (error) {
-        toast.error("Cannot get Issue");
-      }
-      finally{
-        setloading(false);
-      }
-    };
+  const navigate = useNavigate();
 
-    fetchOneIssue();
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get<myIssues>(`${process.env.REACT_APP_BACKEND_URL}/reportIssue/getOne/${id}`, { withCredentials: true })
+      .then((res) => setOneIssue(res.data))
+      .catch(() => toast.error('Cannot get issue'))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if(loading) return <p>Getting Issue...</p>
-  if (!issue) return <p>Cannot get Issue</p>;
+  if (loading) return <div className="state-loading"><div className="state-spinner" /></div>;
+  if (!issue) return <div className="state-empty"><p>Issue not found</p></div>;
 
   return (
-<>
-    <div className="card mb-3">
-      <div className="card-body">
-        <h5 className="card-title">{issue.title}</h5>
-        <p className="card-text">{issue.description}</p>
-         <p className="card-text">{issue.priority}</p>
-          <p className="card-text">{issue.status}</p>
+    <div className="page-root">
+      <div className="page-header">
+        <h2 className="page-title">{issue.title}</h2>
+        <button className="btn-ghost" onClick={() => navigate('/employee/reportIssue')}>Back</button>
+      </div>
+      <div className="detail-card">
+        <div className="detail-grid">
+          <div className="detail-field">
+            <span className="detail-field-label">Status</span>
+            <span className={badge(issue.status)}>{issue.status.replace('_', ' ')}</span>
+          </div>
+          <div className="detail-field">
+            <span className="detail-field-label">Priority</span>
+            <span className={badge(issue.priority)}>{issue.priority}</span>
+          </div>
+          <div className="detail-field">
+            <span className="detail-field-label">Submitted</span>
+            <span className="detail-field-value">{fmt(issue.createdAt)}</span>
+          </div>
+          <div className="detail-field">
+            <span className="detail-field-label">Last Updated</span>
+            <span className="detail-field-value">{fmt(issue.updatedAt)}</span>
+          </div>
+          <div className="detail-field" style={{ gridColumn: '1 / -1' }}>
+            <span className="detail-field-label">Description</span>
+            <span className="detail-field-value" style={{ lineHeight: 1.6 }}>{issue.description}</span>
+          </div>
+        </div>
+        <div className="detail-actions">
+          <DeleteIssue id={issue._id} />
+        </div>
       </div>
     </div>
-    
-<button className='btn btn-secondary' onClick={()=>{BackButton()}}>Back</button>
-<DeleteIssue id={issue._id}/>
-</>
   );
-
 }
