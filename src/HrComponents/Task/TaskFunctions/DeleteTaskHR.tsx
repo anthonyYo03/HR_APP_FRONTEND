@@ -26,7 +26,7 @@ export default function DeleteTaskHR({ id }: Props) {
   return (
     <button className="btn-danger" onClick={handleDelete} disabled={loading}>
       {loading && <span className="btn-spinner" style={{ borderColor: 'rgba(239,68,68,0.3)', borderTopColor: '#ef4444' }} />}
-      {loading ? 'Deleting...' : 'Delete'}
+      {loading ? 'Deleting…' : 'Delete'}
     </button>
   );
 }

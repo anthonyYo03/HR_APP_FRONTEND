@@ -51,7 +51,7 @@ export default function EditIssueStatus({ id }: Props) {
       </div>
       <button type="submit" className="btn-gold" disabled={loading}>
         {loading && <span className="btn-spinner" />}
-        {loading ? 'Updating...' : 'Update Status'}
+        {loading ? 'Updating…' : 'Update Status'}
       </button>
     </form>
   );

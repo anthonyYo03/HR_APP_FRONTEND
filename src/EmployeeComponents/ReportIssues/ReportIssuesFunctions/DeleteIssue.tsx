@@ -26,7 +26,7 @@ export default function DeleteIssue({ id }: Props) {
   return (
     <button onClick={handleDelete} className="btn-danger" disabled={loading}>
       {loading && <span className="btn-spinner-white" />}
-      {loading ? 'Deleting...' : 'Delete Issue'}
+      {loading ? 'Deleting…' : 'Delete Issue'}
     </button>
   );
 }

@@ -37,7 +37,7 @@ export default function GetOneIssue() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">{issue.title}</h2>
-        <button className="btn-ghost" onClick={() => navigate('/employee/reportIssue')}>Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/employee/reportIssue')}>â† Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-grid">

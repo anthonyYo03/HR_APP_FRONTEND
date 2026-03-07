@@ -46,7 +46,7 @@ export default function UpdateTaskHR() {
     setLoading(true);
     try {
       await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/task/hrUpdate/${id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/task/edit/${id}`,
         { ...task, assignedTo: task.assignedTo._id },
         { withCredentials: true }
       );
@@ -117,7 +117,7 @@ export default function UpdateTaskHR() {
             <button type="button" className="btn-ghost" onClick={() => navigate('/hr/task')} disabled={loading}>Cancel</button>
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
-              {loading ? 'Saving...' : 'Save Changes'}
+              {loading ? 'Savingâ€¦' : 'Save Changes'}
             </button>
           </div>
         </form>

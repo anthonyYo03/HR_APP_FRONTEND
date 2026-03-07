@@ -120,7 +120,7 @@ export default function ResetPassword() {
             </div>
             <button className="reg-btn" type="submit" disabled={isLoading}>
               {isLoading && <span className="reg-spinner" />}
-              {isLoading ? 'Resetting ...' : 'Reset Password'}
+              {isLoading ? 'Resettingâ€¦' : 'Reset Password'}
             </button>
           </form>
           <div className="reg-footer">
@@ -131,7 +131,7 @@ export default function ResetPassword() {
                 fontSize: '0.82rem', fontFamily: 'DM Sans, sans-serif',
               }}
             >
-               Back to Sign In
+              â† Back to Sign In
             </button>
           </div>
         </div>

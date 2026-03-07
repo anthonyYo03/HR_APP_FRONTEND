@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getAllTask } from '../../../types/task';
 import toast from 'react-hot-toast';
-import UpdateTasksStatusEmployee from './UpdateTasksStatusEmployee';
 
 const badge = (v: string) => {
   const m: Record<string, string> = { pending: 'pending', 'in-progress': 'in-progress', completed: 'completed', low: 'low', medium: 'medium', high: 'high' };
@@ -34,7 +33,7 @@ export default function GetOneTaskEmployee() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">{task.name}</h2>
-        <button className="btn-ghost" onClick={() => navigate('/employee/task')}>Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/employee/task')}>â† Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-grid">
@@ -67,8 +66,10 @@ export default function GetOneTaskEmployee() {
             <span className="detail-field-value" style={{ lineHeight: 1.6 }}>{task.description}</span>
           </div>
         </div>
+        <div className="detail-actions">
+          <button className="btn-gold" onClick={() => navigate(`/employee/updateTaskStatus/${id}`, { state: { task } })}>Update Status</button>
+        </div>
       </div>
-      <UpdateTasksStatusEmployee />
     </div>
   );
 }

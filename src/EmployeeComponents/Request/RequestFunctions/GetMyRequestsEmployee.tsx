@@ -15,9 +15,14 @@ const badge = (v: string) => {
 
 const fmt = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
+const EMP_REQUEST_STATUSES = ['all', 'Pending', 'Approved', 'Rejected'] as const;
+
 export default function GetMyRequestsEmployee() {
   const [requests, setRequests] = useState<getRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('all');
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = 5;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,17 +35,34 @@ export default function GetMyRequestsEmployee() {
 
   if (loading) return <div className="state-loading"><div className="state-spinner" /></div>;
 
-  if (requests.length === 0)
-    return (
-      <div className="state-empty">
-        <div className="state-empty-icon"><MdRequestPage /></div>
-        <p>No leave requests yet</p>
-      </div>
-    );
+  const filtered = filter === 'all' ? requests : requests.filter(r => r.status === filter);
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <>
-      {requests.map((req) => (
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+        {EMP_REQUEST_STATUSES.map(s => (
+          <button
+            key={s}
+            onClick={() => { setFilter(s); setPage(1); }}
+            style={{
+              padding: '0.35rem 0.9rem', borderRadius: '999px', fontSize: '0.8rem', cursor: 'pointer',
+              border: filter === s ? '1px solid #e8c468' : '1px solid #2a2a30',
+              background: filter === s ? '#e8c468' : '#18181b',
+              color: filter === s ? '#18181b' : '#9a9490', fontWeight: filter === s ? 700 : 400,
+              transition: 'all 0.15s',
+            }}
+          >{s === 'all' ? 'All' : s}</button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="state-empty">
+          <div className="state-empty-icon"><MdRequestPage /></div>
+          <p>{requests.length === 0 ? 'No leave requests yet' : 'No requests match this status.'}</p>
+        </div>
+      ) : paginated.map((req) => (
         <div key={req._id} className="data-card" onClick={() => navigate(`/employee/getOneRequest/${req._id}`)}>          <div className="data-card-header">
             <h3 className="data-card-title">{req.leave_type} Leave</h3>
             <div style={{ display: 'flex', gap: '0.4rem', flexShrink: 0 }}>
@@ -55,6 +77,13 @@ export default function GetMyRequestsEmployee() {
           </div>
         </div>
       ))}
+      {totalPages > 1 && (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.75rem', marginTop: '1.25rem' }}>
+          <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={{ padding: '0.35rem 0.8rem', borderRadius: '6px', border: '1px solid #2a2a30', background: page === 1 ? '#18181b' : '#232329', color: page === 1 ? '#555' : '#e8c468', cursor: page === 1 ? 'default' : 'pointer', fontWeight: 600, fontSize: '0.82rem' }}>Prev</button>
+          <span style={{ color: '#9a9490', fontSize: '0.82rem' }}>Page {page} of {totalPages}</span>
+          <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} style={{ padding: '0.35rem 0.8rem', borderRadius: '6px', border: '1px solid #2a2a30', background: page === totalPages ? '#18181b' : '#232329', color: page === totalPages ? '#555' : '#e8c468', cursor: page === totalPages ? 'default' : 'pointer', fontWeight: 600, fontSize: '0.82rem' }}>Next</button>
+        </div>
+      )}
     </>
   );
 }

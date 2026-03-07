@@ -38,7 +38,7 @@ export default function GetOneRequestHR() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">Leave Request</h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/request')}>Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/request')}>â† Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-grid">
@@ -64,7 +64,7 @@ export default function GetOneRequestHR() {
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Approved By</span>
-            <span className="detail-field-value">{request.approvedBy?.username || 'Pending'}</span>
+            <span className="detail-field-value">{request.approvedBy?.username || 'â€” Pending'}</span>
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Approved Date</span>

@@ -37,7 +37,7 @@ export default function GetOneIssueHr() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">{issue.title}</h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/reportIssue')}>Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/reportIssue')}>â† Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-grid">
@@ -51,7 +51,7 @@ export default function GetOneIssueHr() {
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Reported By</span>
-            <span className="detail-field-value">{issue.reportedBy?.username || 'Pending'}</span>
+            <span className="detail-field-value">{issue.reportedBy.username}</span>
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Submitted</span>

@@ -33,7 +33,7 @@ export default function CreateRequestEmployee() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">New Leave <span>Request</span></h2>
-        <button className="btn-ghost" onClick={() => navigate('/employee/request')}>Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/employee/request')}>â† Back</button>
       </div>
       <div className="form-card">
         <form onSubmit={handleSubmit}>
@@ -81,7 +81,7 @@ export default function CreateRequestEmployee() {
           <div className="form-actions">
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
-              {loading ? 'Submitting...' : 'Submit Request'}
+              {loading ? 'Submittingâ€¦' : 'Submit Request'}
             </button>
           </div>
         </form>

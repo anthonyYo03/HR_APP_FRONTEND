@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { MdAnnouncement, MdLogout, MdRequestPage, MdTask, MdReport, MdMenu, MdClose } from 'react-icons/md';
+import { MdAnnouncement, MdLogout, MdRequestPage, MdTask, MdReport, MdMenu } from 'react-icons/md';
 import { handleLogout } from '../../Logout/Logout';
 import NotificationBell from '../../NotificationBell/NotificationBell';
 
@@ -11,27 +11,24 @@ export default function EmployeeSidebar() {
 
   const active = (path: string) => location.pathname.startsWith(path) ? 'active' : '';
 
-  const close = () => setMobileOpen(false);
-
   return (
     <div className="app-layout">
-      {mobileOpen && <div className="sidebar-overlay" onClick={close} />}
       <aside className={`app-sidebar ${mobileOpen ? 'open' : ''}`}>
         <div className="sidebar-brand">
           <h1 className="sidebar-brand-title">HR <span>Portal</span></h1>
           <NotificationBell />
         </div>
         <nav className="sidebar-nav">
-          <Link className={`sidebar-link ${active('/employee/announcement')}`} to="/employee/announcement" onClick={close}>
+          <Link className={`sidebar-link ${active('/employee/announcement')}`} to="/employee/announcement">
             <MdAnnouncement size={19} /> Announcements
           </Link>
-          <Link className={`sidebar-link ${active('/employee/request')}`} to="/employee/request" onClick={close}>
+          <Link className={`sidebar-link ${active('/employee/request')}`} to="/employee/request">
             <MdRequestPage size={19} /> Requests
           </Link>
-          <Link className={`sidebar-link ${active('/employee/task')}`} to="/employee/task" onClick={close}>
+          <Link className={`sidebar-link ${active('/employee/task')}`} to="/employee/task">
             <MdTask size={19} /> Tasks
           </Link>
-          <Link className={`sidebar-link ${active('/employee/reportIssue')}`} to="/employee/reportIssue" onClick={close}>
+          <Link className={`sidebar-link ${active('/employee/reportIssue')}`} to="/employee/reportIssue">
             <MdReport size={19} /> Report Issues
           </Link>
         </nav>
@@ -46,8 +43,9 @@ export default function EmployeeSidebar() {
         <button
           className="sidebar-open-btn"
           onClick={() => setMobileOpen(!mobileOpen)}
+          style={{ display: 'none' }}
         >
-          {mobileOpen ? <MdClose size={22} /> : <MdMenu size={22} />}
+          <MdMenu size={22} />
         </button>
         <Outlet />
       </main>

@@ -28,7 +28,7 @@ export default function GetOneAnnouncementEmployee() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">{announcement.title}</h2>
-        <button className="btn-ghost" onClick={() => navigate('/employee/announcement')}>Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/employee/announcement')}>â† Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-field" style={{ gridColumn: '1 / -1' }}>

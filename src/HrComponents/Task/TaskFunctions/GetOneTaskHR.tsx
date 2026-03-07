@@ -37,7 +37,7 @@ export default function GetOneTaskHR() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">{task.name}</h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/task')}>Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/task')}>â† Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-grid">
@@ -51,11 +51,11 @@ export default function GetOneTaskHR() {
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Assigned To</span>
-            <span className="detail-field-value">{task.assignedTo?.username || 'Pending'}</span>
+            <span className="detail-field-value">{task.assignedTo.username}</span>
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Created By</span>
-            <span className="detail-field-value">{task.createdBy?.username || 'Pending'}</span>
+            <span className="detail-field-value">{task.createdBy.username}</span>
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Due Date</span>

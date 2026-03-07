@@ -70,7 +70,7 @@ export default function ForgotPassword() {
                 fontSize: '0.82rem', fontFamily: 'DM Sans, sans-serif',
               }}
             >
-              Back to Sign In
+              â† Back to Sign In
             </button>
           </div>
         </div>

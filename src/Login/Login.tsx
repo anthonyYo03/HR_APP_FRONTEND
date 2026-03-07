@@ -67,14 +67,14 @@ export default function Login() {
             </div>
             <button className="reg-btn" type="submit" disabled={loading}>
               {loading && <span className="reg-spinner" />}
-              {loading ? 'Signing in ...' : 'Sign In'}
+              {loading ? 'Signing inâ€¦' : 'Sign In'}
             </button>
           </form>
           <div className="reg-footer" style={{ marginTop: '0.75rem' }}>
             <Link to="/forgot-password">Forgot your password?</Link>
           </div>
           <div className="reg-footer">
-            Don't have an account? <Link to="/">Sign Up</Link>
+            Donâ€™t have an account? <Link to="/">Sign Up</Link>
           </div>
         </div>
       </div>

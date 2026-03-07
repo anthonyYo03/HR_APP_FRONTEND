@@ -38,7 +38,7 @@ export default function Register() {
           <div className="reg-ornament" />
           <p className="reg-eyebrow">HR Portal</p>
           <h1 className="reg-heading">Create <em>Account</em></h1>
-          <p className="reg-sub">Join your organisation's HR platform</p>
+          <p className="reg-sub">Join your organisationâ€™s HR platform</p>
           <div className="reg-divider" />
           <form onSubmit={handleSubmit}>
             <div className="reg-field">
@@ -76,7 +76,7 @@ export default function Register() {
             </div>
             <button className="reg-btn" type="submit" disabled={loading}>
               {loading && <span className="reg-spinner" />}
-              {loading ? 'Registering ...' : 'Create Account'}
+              {loading ? 'Registeringâ€¦' : 'Create Account'}
             </button>
           </form>
           <div className="reg-footer">

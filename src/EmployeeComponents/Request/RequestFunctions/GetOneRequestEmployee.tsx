@@ -38,7 +38,7 @@ export default function GetOneRequestEmployee() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">{request.leave_type} Leave Request</h2>
-        <button className="btn-ghost" onClick={() => navigate('/employee/request')}>Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/employee/request')}>â† Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-grid">
@@ -60,7 +60,7 @@ export default function GetOneRequestEmployee() {
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Approved By</span>
-            <span className="detail-field-value">{request.approvedBy?.username || 'Awaiting approval'}</span>
+            <span className="detail-field-value">{request.approvedBy?.username || 'â€” Pending'}</span>
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Approved Date</span>

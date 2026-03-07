@@ -62,7 +62,7 @@ export default function CreateAnnouncement() {
             <button type="button" className="btn-ghost" onClick={() => navigate('/hr/announcement')} disabled={loading}>Cancel</button>
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
-              {loading ? 'Creating...' : 'Create Announcement'}
+              {loading ? 'Creatingâ€¦' : 'Create Announcement'}
             </button>
           </div>
         </form>

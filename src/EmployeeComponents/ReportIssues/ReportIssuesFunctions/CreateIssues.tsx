@@ -33,7 +33,7 @@ export default function CreateIssues() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">Report an <span>Issue</span></h2>
-        <button className="btn-ghost" onClick={() => navigate('/employee/reportIssue')}> Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/employee/reportIssue')}>â† Back</button>
       </div>
       <div className="form-card">
         <form onSubmit={handleSubmit}>
@@ -41,7 +41,7 @@ export default function CreateIssues() {
             <label className="form-lbl" htmlFor="title">Title</label>
             <input
               type="text" id="title" className="form-inp"
-              placeholder="Brief issue title"
+              placeholder="Brief issue titleâ€¦"
               value={issue.title}
               onChange={(e) => setIssue({ ...issue, title: e.target.value })}
             />
@@ -50,7 +50,7 @@ export default function CreateIssues() {
             <label className="form-lbl" htmlFor="desc">Description</label>
             <textarea
               id="desc" className="form-inp" rows={4}
-              placeholder="Describe the issue in details"
+              placeholder="Describe the issue in detailâ€¦"
               value={issue.description}
               onChange={(e) => setIssue({ ...issue, description: e.target.value })}
             />
@@ -74,7 +74,7 @@ export default function CreateIssues() {
           <div className="form-actions">
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
-              {loading ? 'Submitting...' : 'Report Issue'}
+              {loading ? 'Submittingâ€¦' : 'Report Issue'}
             </button>
           </div>
         </form>

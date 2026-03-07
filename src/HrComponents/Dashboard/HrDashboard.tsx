@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MdAnnouncement, MdTask, MdRequestPage, MdReport } from 'react-icons/md';
 
@@ -11,6 +12,7 @@ interface Stats {
 }
 
 export default function HrDashboard() {
+  const navigate = useNavigate();
   const [stats, setStats] = useState<Stats>({ announcements: 0, tasks: 0, requests: 0, issues: 0 });
   const [loading, setLoading] = useState(true);
 
@@ -24,11 +26,20 @@ export default function HrDashboard() {
       axios.get(`${base}/reportIssue/getAll`, opts),
     ])
       .then(([ann, tasks, req, issues]) => {
+        const pendingRequests = Array.isArray(req.data)
+          ? req.data.filter((r: any) => r.status === 'pending').length
+          : 0;
+        const activeTasks = Array.isArray(tasks.data)
+          ? tasks.data.filter((t: any) => t.status === 'pending' || t.status === 'in-progress').length
+          : 0;
+        const activeIssues = Array.isArray(issues.data)
+          ? issues.data.filter((i: any) => i.status === 'pending' || i.status === 'in_progress').length
+          : 0;
         setStats({
           announcements: ann.data.length,
-          tasks: tasks.data.length,
-          requests: req.data.length,
-          issues: issues.data.length,
+          tasks: activeTasks,
+          requests: pendingRequests,
+          issues: activeIssues,
         });
       })
       .catch(() => {})
@@ -36,10 +47,10 @@ export default function HrDashboard() {
   }, []);
 
   const cards = [
-    { label: 'Announcements', value: stats.announcements, icon: <MdAnnouncement size={22} /> },
-    { label: 'Tasks',         value: stats.tasks,         icon: <MdTask size={22} /> },
-    { label: 'Requests',      value: stats.requests,      icon: <MdRequestPage size={22} /> },
-    { label: 'Issues',        value: stats.issues,        icon: <MdReport size={22} /> },
+    { label: 'Announcements',    value: stats.announcements, icon: <MdAnnouncement size={22} />, path: '/hr/announcement' },
+    { label: 'Active Tasks',     value: stats.tasks,         icon: <MdTask size={22} />,         path: '/hr/task' },
+    { label: 'Pending Requests', value: stats.requests,      icon: <MdRequestPage size={22} />,  path: '/hr/request' },
+    { label: 'Active Issues',    value: stats.issues,        icon: <MdReport size={22} />,       path: '/hr/reportIssue' },
   ];
 
   return (
@@ -53,7 +64,7 @@ export default function HrDashboard() {
       ) : (
         <div className="stat-grid">
           {cards.map((c) => (
-            <div className="stat-card" key={c.label}>
+            <div className="stat-card" key={c.label} onClick={() => navigate(c.path)} style={{ cursor: 'pointer' }}>
               <div className="stat-card-icon">{c.icon}</div>
               <div className="stat-card-value">{c.value}</div>
               <div className="stat-card-label">{c.label}</div>
