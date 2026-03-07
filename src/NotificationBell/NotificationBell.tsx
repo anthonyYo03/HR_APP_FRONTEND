@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { MdNotifications } from 'react-icons/md';
 import { Notification } from '../types/notification';
@@ -9,6 +10,8 @@ const API = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 export default function NotificationBell() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 340 });
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
@@ -37,13 +40,26 @@ export default function NotificationBell() {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current && !dropdownRef.current.contains(e.target as Node) &&
+        wrapperRef.current && !wrapperRef.current.contains(e.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const openDropdown = () => {
+    if (!isOpen && wrapperRef.current) {
+      const rect = wrapperRef.current.getBoundingClientRect();
+      const dropW = window.innerWidth < 640 ? Math.min(320, window.innerWidth - 16) : 340;
+      const left = Math.min(rect.right - dropW, window.innerWidth - dropW - 8);
+      setDropdownPos({ top: rect.bottom + 10, left: Math.max(8, left), width: dropW });
+    }
+    setIsOpen((prev) => !prev);
+  };
 
   const markAsRead = async (id: string) => {
     try {
@@ -62,16 +78,20 @@ export default function NotificationBell() {
   };
 
   return (
-    <div ref={dropdownRef} className="notif-wrapper">
-      <button className="notif-btn" onClick={() => setIsOpen((prev) => !prev)} aria-label="Notifications">
+    <div ref={wrapperRef} className="notif-wrapper">
+      <button className="notif-btn" onClick={openDropdown} aria-label="Notifications">
         <MdNotifications size={22} />
         {unreadCount > 0 && (
           <span className="notif-badge">{unreadCount > 99 ? '99+' : unreadCount}</span>
         )}
       </button>
 
-      {isOpen && (
-        <div className="notif-dropdown">
+      {isOpen && ReactDOM.createPortal(
+        <div
+          ref={dropdownRef}
+          className="notif-dropdown"
+          style={{ position: 'fixed', top: dropdownPos.top, left: dropdownPos.left, width: dropdownPos.width }}
+        >
           <div className="notif-header">
             <span className="notif-header-title">Notifications</span>
             {notifications.length > 0 && (
@@ -97,7 +117,8 @@ export default function NotificationBell() {
               </div>
             ))
           )}
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

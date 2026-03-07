@@ -38,7 +38,7 @@ export default function GetOneRequestEmployee() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">{request.leave_type} Leave Request</h2>
-        <button className="btn-ghost" onClick={() => navigate('/employee/request')}>â† Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/employee/request')}>Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-grid">
