@@ -33,7 +33,7 @@ export default function CreateRequestEmployee() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">New Leave <span>Request</span></h2>
-        <button className="btn-ghost" onClick={() => navigate('/employee/request')}>â† Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/employee/request')}>Back</button>
       </div>
       <div className="form-card">
         <form onSubmit={handleSubmit}>
@@ -73,7 +73,7 @@ export default function CreateRequestEmployee() {
             <label className="form-lbl" htmlFor="reason">Reason</label>
             <textarea
               id="reason" className="form-inp" rows={4}
-              placeholder="Describe the reason for your leave requestâ€¦"
+              placeholder="Describe the reason for your leave request"
               value={request.reason}
               onChange={(e) => setRequest({ ...request, reason: e.target.value })}
             />
@@ -81,7 +81,7 @@ export default function CreateRequestEmployee() {
           <div className="form-actions">
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
-              {loading ? 'Submittingâ€¦' : 'Submit Request'}
+              {loading ? 'Submitting' : 'Submit Request'}
             </button>
           </div>
         </form>

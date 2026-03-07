@@ -38,7 +38,7 @@ export default function GetOneRequestHR() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">Leave Request</h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/request')}>â† Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/request')}> Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-grid">

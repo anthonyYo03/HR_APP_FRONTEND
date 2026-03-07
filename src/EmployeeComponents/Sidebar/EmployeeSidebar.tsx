@@ -13,22 +13,23 @@ export default function EmployeeSidebar() {
 
   return (
     <div className="app-layout">
+      {mobileOpen && <div className="sidebar-backdrop" onClick={() => setMobileOpen(false)} />}
       <aside className={`app-sidebar ${mobileOpen ? 'open' : ''}`}>
         <div className="sidebar-brand">
           <h1 className="sidebar-brand-title">HR <span>Portal</span></h1>
           <NotificationBell />
         </div>
         <nav className="sidebar-nav">
-          <Link className={`sidebar-link ${active('/employee/announcement')}`} to="/employee/announcement">
+          <Link className={`sidebar-link ${active('/employee/announcement')}`} to="/employee/announcement" onClick={() => setMobileOpen(false)}>
             <MdAnnouncement size={19} /> Announcements
           </Link>
-          <Link className={`sidebar-link ${active('/employee/request')}`} to="/employee/request">
+          <Link className={`sidebar-link ${active('/employee/request')}`} to="/employee/request" onClick={() => setMobileOpen(false)}>
             <MdRequestPage size={19} /> Requests
           </Link>
-          <Link className={`sidebar-link ${active('/employee/task')}`} to="/employee/task">
+          <Link className={`sidebar-link ${active('/employee/task')}`} to="/employee/task" onClick={() => setMobileOpen(false)}>
             <MdTask size={19} /> Tasks
           </Link>
-          <Link className={`sidebar-link ${active('/employee/reportIssue')}`} to="/employee/reportIssue">
+          <Link className={`sidebar-link ${active('/employee/reportIssue')}`} to="/employee/reportIssue" onClick={() => setMobileOpen(false)}>
             <MdReport size={19} /> Report Issues
           </Link>
         </nav>
@@ -43,7 +44,6 @@ export default function EmployeeSidebar() {
         <button
           className="sidebar-open-btn"
           onClick={() => setMobileOpen(!mobileOpen)}
-          style={{ display: 'none' }}
         >
           <MdMenu size={22} />
         </button>

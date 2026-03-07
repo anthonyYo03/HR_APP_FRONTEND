@@ -40,7 +40,7 @@ export default function EditAnnouncement() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">Edit <span>Announcement</span></h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/announcement')}>â† Cancel</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/announcement')}> Cancel</button>
       </div>
       <div className="form-card">
         <form onSubmit={handleEdit}>
@@ -59,7 +59,7 @@ export default function EditAnnouncement() {
             <label className="form-lbl">Description</label>
             <textarea
               className="form-inp"
-              placeholder="Write the announcement contentâ€¦"
+              placeholder="Write the announcement content"
               rows={5}
               value={editAnnouncement.description}
               onChange={(e) => setEditAnnouncement({ ...editAnnouncement, description: e.target.value })}
@@ -71,7 +71,7 @@ export default function EditAnnouncement() {
             <button type="button" className="btn-ghost" onClick={() => navigate('/hr/announcement')} disabled={loading}>Cancel</button>
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
-              {loading ? 'Savingâ€¦' : 'Save Changes'}
+              {loading ? 'Saving . . .' : 'Save Changes'}
             </button>
           </div>
         </form>

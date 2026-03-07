@@ -68,12 +68,12 @@ export default function Otp() {
             </div>
             <button className="reg-btn" type="submit" disabled={loading}>
               {loading && <span className="reg-spinner" />}
-              {loading ? 'Verifyingâ€¦' : 'Verify OTP'}
+              {loading ? 'Verifying . . .' : 'Verify OTP'}
             </button>
           </form>
           <div className="reg-footer" style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginTop: '1rem' }}>
             <button onClick={resendOTP} disabled={resendLoading} style={linkStyle}>
-              {resendLoading ? 'Resendingâ€¦' : 'Resend OTP'}
+              {resendLoading ? 'Resending . . .' : 'Resend OTP'}
             </button>
             <button onClick={() => navigate('/')} style={{ ...linkStyle, color: '#4a4845' }}>
               Back

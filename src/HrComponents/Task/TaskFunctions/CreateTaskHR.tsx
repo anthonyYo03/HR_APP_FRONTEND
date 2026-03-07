@@ -49,7 +49,7 @@ export default function CreateTaskHR() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">Create <span>Task</span></h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/task')}>â† Cancel</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/task')}> Cancel</button>
       </div>
       <div className="form-card">
         <form onSubmit={handleCreate}>
@@ -60,7 +60,7 @@ export default function CreateTaskHR() {
           </div>
           <div className="form-field">
             <label className="form-lbl">Description</label>
-            <textarea className="form-inp" placeholder="Describe the taskâ€¦" rows={4} value={task.description}
+            <textarea className="form-inp" placeholder="Describe the task" rows={4} value={task.description}
               onChange={(e) => setTask({ ...task, description: e.target.value })} disabled={loading}
               style={{ resize: 'vertical' }} />
           </div>
@@ -103,7 +103,7 @@ export default function CreateTaskHR() {
             <button type="button" className="btn-ghost" onClick={() => navigate('/hr/task')} disabled={loading}>Cancel</button>
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
-              {loading ? 'Creatingâ€¦' : 'Create Task'}
+              {loading ? 'Creating . . .' : 'Create Task'}
             </button>
           </div>
         </form>

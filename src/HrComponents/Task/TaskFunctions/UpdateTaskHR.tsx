@@ -67,7 +67,7 @@ export default function UpdateTaskHR() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">Edit <span>Task</span></h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/task')}>â† Cancel</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/task')}>Cancel</button>
       </div>
       <div className="form-card">
         <form onSubmit={handleUpdate}>
@@ -117,7 +117,7 @@ export default function UpdateTaskHR() {
             <button type="button" className="btn-ghost" onClick={() => navigate('/hr/task')} disabled={loading}>Cancel</button>
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
-              {loading ? 'Savingâ€¦' : 'Save Changes'}
+              {loading ? 'Saving . . .' : 'Save Changes'}
             </button>
           </div>
         </form>

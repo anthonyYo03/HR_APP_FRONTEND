@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { MdReport } from 'react-icons/md';
+import { MdReport, MdSearch } from 'react-icons/md';
 
 const badge = (v: string) => {
   const m: Record<string, string> = {
@@ -22,6 +22,8 @@ export default function GetMyIssues() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
   const PAGE_SIZE = 5;
   const navigate = useNavigate();
 
@@ -38,9 +40,45 @@ export default function GetMyIssues() {
   const filtered = filter === 'all' ? issues : issues.filter(i => i.status === filter);
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const searchResults = search.trim()
+    ? issues.filter(i =>
+        i.title.toLowerCase().includes(search.toLowerCase()) ||
+        i.description.toLowerCase().includes(search.toLowerCase()) ||
+        i.status.toLowerCase().includes(search.toLowerCase()) ||
+        i.priority.toLowerCase().includes(search.toLowerCase())
+      ).slice(0, 6)
+    : [];
 
   return (
     <>
+      <div style={{ position: 'relative', marginBottom: '0.5rem' }}>
+        <MdSearch style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#9a9490', fontSize: '1.1rem', pointerEvents: 'none' }} />
+        <input
+          type="text"
+          placeholder="Search issues..."
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); setShowDropdown(true); }}
+          onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+          onFocus={() => { if (search) setShowDropdown(true); }}
+          style={{ width: '100%', boxSizing: 'border-box', padding: '0.5rem 1rem 0.5rem 2.25rem', borderRadius: '8px', border: '1px solid #2a2a30', background: '#18181b', color: '#e8e8e8', fontSize: '0.875rem', outline: 'none' }}
+        />
+        {showDropdown && searchResults.length > 0 && (
+          <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#232329', border: '1px solid #2a2a30', borderRadius: '8px', zIndex: 100, marginTop: '0.25rem', boxShadow: '0 4px 16px rgba(0,0,0,0.4)', overflow: 'hidden' }}>
+            {searchResults.map(i => (
+              <div
+                key={i._id}
+                onMouseDown={() => { navigate(`/employee/oneIssue/${i._id}`); setShowDropdown(false); setSearch(''); }}
+                style={{ padding: '0.6rem 1rem', cursor: 'pointer', borderBottom: '1px solid #2a2a30' }}
+                onMouseEnter={e => (e.currentTarget.style.background = '#2a2a30')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+              >
+                <div style={{ fontWeight: 600, color: '#e8e8e8', fontSize: '0.875rem' }}>{i.title}</div>
+                <div style={{ color: '#9a9490', fontSize: '0.8rem' }}>{i.priority} • {i.status.replace('_', ' ')}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
       <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
         {EMP_ISSUE_STATUSES.map(s => (
           <button

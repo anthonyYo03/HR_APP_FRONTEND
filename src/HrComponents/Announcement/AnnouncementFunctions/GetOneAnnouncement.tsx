@@ -27,7 +27,7 @@ export default function GetOneAnnouncement() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">{announcement.title}</h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/announcement')}>â† Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/announcement')}> Back</button>
       </div>
       <div className="detail-card">
         <p style={{ color: '#c5bfb5', lineHeight: 1.7, fontSize: '0.95rem', margin: 0 }}>

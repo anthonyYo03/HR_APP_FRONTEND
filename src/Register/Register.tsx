@@ -76,7 +76,7 @@ export default function Register() {
             </div>
             <button className="reg-btn" type="submit" disabled={loading}>
               {loading && <span className="reg-spinner" />}
-              {loading ? 'Registeringâ€¦' : 'Create Account'}
+              {loading ? 'Registering . . .' : 'Create Account'}
             </button>
           </form>
           <div className="reg-footer">

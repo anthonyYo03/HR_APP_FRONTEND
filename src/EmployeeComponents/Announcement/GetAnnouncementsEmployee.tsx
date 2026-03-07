@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getAnnouncement } from '../../types/announcement';
 import axios from 'axios';
-import { MdAnnouncement } from 'react-icons/md';
+import { MdAnnouncement, MdSearch } from 'react-icons/md';
 
 const fmt = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
@@ -13,6 +13,8 @@ export default function GetAnnouncementEmployee() {
   const [announcements, setAnnouncements] = useState<getAnnouncement[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,11 +37,45 @@ export default function GetAnnouncementEmployee() {
 
   const totalPages = Math.ceil(announcements.length / PAGE_SIZE);
   const paginated = announcements.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const searchResults = search.trim()
+    ? announcements.filter(a =>
+        a.title.toLowerCase().includes(search.toLowerCase()) ||
+        a.description.toLowerCase().includes(search.toLowerCase())
+      ).slice(0, 6)
+    : [];
 
   return (
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">Announcements</h2>
+      </div>
+      <div style={{ position: 'relative', marginBottom: '1rem' }}>
+        <MdSearch style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#9a9490', fontSize: '1.1rem', pointerEvents: 'none' }} />
+        <input
+          type="text"
+          placeholder="Search announcements..."
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); setShowDropdown(true); }}
+          onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+          onFocus={() => { if (search) setShowDropdown(true); }}
+          style={{ width: '100%', boxSizing: 'border-box', padding: '0.5rem 1rem 0.5rem 2.25rem', borderRadius: '8px', border: '1px solid #2a2a30', background: '#18181b', color: '#e8e8e8', fontSize: '0.875rem', outline: 'none' }}
+        />
+        {showDropdown && searchResults.length > 0 && (
+          <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#232329', border: '1px solid #2a2a30', borderRadius: '8px', zIndex: 100, marginTop: '0.25rem', boxShadow: '0 4px 16px rgba(0,0,0,0.4)', overflow: 'hidden' }}>
+            {searchResults.map(a => (
+              <div
+                key={a._id}
+                onMouseDown={() => { navigate(`/employee/getOneAnnouncement/${a._id}`); setShowDropdown(false); setSearch(''); }}
+                style={{ padding: '0.6rem 1rem', cursor: 'pointer', borderBottom: '1px solid #2a2a30' }}
+                onMouseEnter={e => (e.currentTarget.style.background = '#2a2a30')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+              >
+                <div style={{ fontWeight: 600, color: '#e8e8e8', fontSize: '0.875rem' }}>{a.title}</div>
+                <div style={{ color: '#9a9490', fontSize: '0.8rem' }}>{a.description.length > 60 ? a.description.slice(0, 60) + '…' : a.description}</div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       {paginated.map((a) => (
         <div key={a._id} className="data-card" onClick={() => navigate(`/employee/getOneAnnouncement/${a._id}`)}>          <div className="data-card-header">
@@ -47,7 +83,7 @@ export default function GetAnnouncementEmployee() {
             <span className="data-card-meta" style={{ fontSize: '0.8rem', color: '#9a9490', flexShrink: 0 }}>{fmt(a.createdAt)}</span>
           </div>
           <p className="data-card-meta" style={{ color: '#9a9490', margin: 0, fontSize: '0.825rem' }}>
-            {a.description.length > 120 ? a.description.slice(0, 120) + 'â€¦' : a.description}
+            {a.description.length > 120 ? a.description.slice(0, 120): a.description}
           </p>
         </div>
       ))}

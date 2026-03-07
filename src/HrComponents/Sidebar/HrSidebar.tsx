@@ -13,25 +13,26 @@ export default function HrSidebar() {
 
   return (
     <div className="app-layout">
+      {mobileOpen && <div className="sidebar-backdrop" onClick={() => setMobileOpen(false)} />}
       <aside className={`app-sidebar ${mobileOpen ? 'open' : ''}`}>
         <div className="sidebar-brand">
           <h1 className="sidebar-brand-title">HR <span>Portal</span></h1>
           <NotificationBell />
         </div>
         <nav className="sidebar-nav">
-          <Link className={`sidebar-link ${active('/hr/dashboard')}`} to="/hr/dashboard">
+          <Link className={`sidebar-link ${active('/hr/dashboard')}`} to="/hr/dashboard" onClick={() => setMobileOpen(false)}>
             <MdDashboard size={19} /> Dashboard
           </Link>
-          <Link className={`sidebar-link ${active('/hr/announcement')}`} to="/hr/announcement">
+          <Link className={`sidebar-link ${active('/hr/announcement')}`} to="/hr/announcement" onClick={() => setMobileOpen(false)}>
             <MdAnnouncement size={19} /> Announcements
           </Link>
-          <Link className={`sidebar-link ${active('/hr/request')}`} to="/hr/request">
+          <Link className={`sidebar-link ${active('/hr/request')}`} to="/hr/request" onClick={() => setMobileOpen(false)}>
             <MdRequestPage size={19} /> Requests
           </Link>
-          <Link className={`sidebar-link ${active('/hr/task')}`} to="/hr/task">
+          <Link className={`sidebar-link ${active('/hr/task')}`} to="/hr/task" onClick={() => setMobileOpen(false)}>
             <MdTask size={19} /> Tasks
           </Link>
-          <Link className={`sidebar-link ${active('/hr/reportIssue')}`} to="/hr/reportIssue">
+          <Link className={`sidebar-link ${active('/hr/reportIssue')}`} to="/hr/reportIssue" onClick={() => setMobileOpen(false)}>
             <MdReport size={19} /> Report Issues
           </Link>
         </nav>
@@ -46,7 +47,6 @@ export default function HrSidebar() {
         <button
           className="sidebar-open-btn"
           onClick={() => setMobileOpen(!mobileOpen)}
-          style={{ display: 'none' }}
         >
           <MdMenu size={22} />
         </button>

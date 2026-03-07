@@ -31,7 +31,7 @@ export default function CreateAnnouncement() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">New <span>Announcement</span></h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/announcement')}>â† Cancel</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/announcement')}> Cancel</button>
       </div>
       <div className="form-card">
         <form onSubmit={handleCreate}>
@@ -50,7 +50,7 @@ export default function CreateAnnouncement() {
             <label className="form-lbl">Description</label>
             <textarea
               className="form-inp"
-              placeholder="Write the announcement content hereâ€¦"
+              placeholder="Write the announcement content here"
               rows={5}
               value={announcement.description}
               onChange={(e) => setAnnouncement({ ...announcement, description: e.target.value })}
@@ -62,7 +62,7 @@ export default function CreateAnnouncement() {
             <button type="button" className="btn-ghost" onClick={() => navigate('/hr/announcement')} disabled={loading}>Cancel</button>
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
-              {loading ? 'Creatingâ€¦' : 'Create Announcement'}
+              {loading ? 'Creating . . .' : 'Create Announcement'}
             </button>
           </div>
         </form>

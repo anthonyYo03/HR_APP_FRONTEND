@@ -37,7 +37,7 @@ export default function GetOneTaskHR() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">{task.name}</h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/task')}>â† Back</button>
+        <button className="btn-ghost" onClick={() => navigate('/hr/task')}>Back</button>
       </div>
       <div className="detail-card">
         <div className="detail-grid">
