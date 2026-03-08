@@ -29,7 +29,7 @@ export default function UpdateTaskHR() {
           dueDate: t.dueDate, priority: t.priority, assignedTo: t.assignedTo });
       })
       .catch(() => toast.error('Cannot load task'));
-  }, [id]);
+  }, [id,location.state]);
 
   useEffect(() => {
     axios.get<User[]>(`${process.env.REACT_APP_BACKEND_URL}/user/all`, { withCredentials: true })
