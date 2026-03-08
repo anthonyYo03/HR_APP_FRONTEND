@@ -60,7 +60,7 @@ export default function GetOneRequestEmployee() {
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Approved By</span>
-            <span className="detail-field-value">{request.approvedBy?.username || 'â€” Pending'}</span>
+            <span className="detail-field-value">{request.approvedBy?.username || 'Pending'}</span>
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Approved Date</span>

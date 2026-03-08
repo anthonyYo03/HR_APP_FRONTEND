@@ -46,7 +46,7 @@ export default function GetAllIssues() {
         i.description.toLowerCase().includes(search.toLowerCase()) ||
         i.status.toLowerCase().includes(search.toLowerCase()) ||
         i.priority.toLowerCase().includes(search.toLowerCase()) ||
-        (i.reportedBy?.username || '').toLowerCase().includes(search.toLowerCase())
+        (i.reportedBy?.username || 'Pending').toLowerCase().includes(search.toLowerCase())
       ).slice(0, 6)
     : [];
 
@@ -74,7 +74,7 @@ export default function GetAllIssues() {
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
               >
                 <div style={{ fontWeight: 600, color: '#e8e8e8', fontSize: '0.875rem' }}>{i.title}</div>
-                <div style={{ color: '#9a9490', fontSize: '0.8rem' }}>By {i.reportedBy?.username} • {i.status.replace('_', ' ')}</div>
+                <div style={{ color: '#9a9490', fontSize: '0.8rem' }}>By {i.reportedBy?.username || 'Pending'} • {i.status.replace('_', ' ')}</div>
               </div>
             ))}
           </div>
@@ -115,7 +115,7 @@ export default function GetAllIssues() {
           </p>
           <div className="data-card-meta-row">
             <span className="data-card-meta">
-              <span className="data-card-label">Reported by</span>{issue.reportedBy?.username}
+              <span className="data-card-label">Reported by</span>{issue.reportedBy?.username || 'Pending'}
             </span>
             <span className="data-card-meta">
               <span className="data-card-label">Submitted</span>{fmt(issue.createdAt)}

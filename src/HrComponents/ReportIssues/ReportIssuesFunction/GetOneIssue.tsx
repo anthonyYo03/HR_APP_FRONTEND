@@ -51,7 +51,7 @@ export default function GetOneIssueHr() {
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Reported By</span>
-            <span className="detail-field-value">{issue.reportedBy.username}</span>
+            <span className="detail-field-value">{issue.reportedBy?.username ||'Pending'}</span>
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Submitted</span>

@@ -28,7 +28,7 @@ export default function EditAnnouncement() {
         { withCredentials: true }
       );
       toast.success('Announcement updated successfully');
-      navigate('/hr/announcement');
+      navigate(`/hr/getOneAnnouncement/${id}`);
     } catch (error: any) {
       toast.error(error?.response?.data?.message || 'Failed to update announcement');
     } finally {
@@ -40,7 +40,7 @@ export default function EditAnnouncement() {
     <div className="page-root">
       <div className="page-header">
         <h2 className="page-title">Edit <span>Announcement</span></h2>
-        <button className="btn-ghost" onClick={() => navigate('/hr/announcement')}> Cancel</button>
+        {/* <button className="btn-ghost" onClick={() => navigate(`/hr/getOneAnnouncement/${id}`)}> Cancel</button> */}
       </div>
       <div className="form-card">
         <form onSubmit={handleEdit}>
@@ -68,7 +68,7 @@ export default function EditAnnouncement() {
             />
           </div>
           <div className="form-actions">
-            <button type="button" className="btn-ghost" onClick={() => navigate('/hr/announcement')} disabled={loading}>Cancel</button>
+            <button type="button" className="btn-ghost" onClick={() => navigate(`/hr/getOneAnnouncement/${id}`)} disabled={loading}>Cancel</button>
             <button type="submit" className="btn-gold" disabled={loading}>
               {loading && <span className="btn-spinner" />}
               {loading ? 'Saving . . .' : 'Save Changes'}

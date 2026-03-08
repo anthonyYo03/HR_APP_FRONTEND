@@ -74,7 +74,7 @@ export default function Login() {
             <Link to="/forgot-password">Forgot your password?</Link>
           </div>
           <div className="reg-footer">
-            Donâ€™t have an account? <Link to="/">Sign Up</Link>
+            Don't have an account? <Link to="/">Sign Up</Link>
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@ export default function GetOneRequestHR() {
         <div className="detail-grid">
           <div className="detail-field">
             <span className="detail-field-label">Employee</span>
-            <span className="detail-field-value">{request.reportedBy.username}</span>
+            <span className="detail-field-value">{request.reportedBy?.username || 'Pending'}</span>
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Leave Type</span>
@@ -64,7 +64,7 @@ export default function GetOneRequestHR() {
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Approved By</span>
-            <span className="detail-field-value">{request.approvedBy?.username || 'â€” Pending'}</span>
+            <span className="detail-field-value">{request.approvedBy?.username || 'Pending'}</span>
           </div>
           <div className="detail-field">
             <span className="detail-field-label">Approved Date</span>

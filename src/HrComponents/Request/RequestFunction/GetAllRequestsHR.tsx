@@ -103,14 +103,14 @@ export default function GetAllRequestsHR() {
       ) : paginated.map((r) => (
         <div key={r._id} className="data-card" onClick={() => navigate(`/hr/getOneRequest/${r._id}`)}>
           <div className="data-card-header">
-            <h3 className="data-card-title">{r.reportedBy?.username}</h3>
+            <h3 className="data-card-title"> Reported By : {r.reportedBy?.username}</h3>
             <div style={{ display: 'flex', gap: '0.4rem', flexShrink: 0 }}>
               <span className={badge(r.leave_type)}>{r.leave_type}</span>
               <span className={badge(r.status)}>{r.status}</span>
             </div>
           </div>
           <p className="data-card-meta" style={{ color: '#9a9490', margin: '0 0 0.5rem', fontSize: '0.825rem' }}>
-            {r.reason.length > 100 ? r.reason.slice(0, 100) : r.reason}
+            Reason : {r.reason.length > 100 ? r.reason.slice(0, 100) : r.reason}
           </p>
           <div className="data-card-meta-row">
             <span className="data-card-meta">

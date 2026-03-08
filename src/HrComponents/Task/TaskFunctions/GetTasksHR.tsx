@@ -46,7 +46,7 @@ export default function GetTasksHR() {
         t.name.toLowerCase().includes(search.toLowerCase()) ||
         t.description.toLowerCase().includes(search.toLowerCase()) ||
         t.status.toLowerCase().includes(search.toLowerCase()) ||
-        t.assignedTo.username.toLowerCase().includes(search.toLowerCase())
+        t.assignedTo?.username.toLowerCase().includes(search.toLowerCase())
       ).slice(0, 6)
     : [];
 
@@ -74,7 +74,7 @@ export default function GetTasksHR() {
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
               >
                 <div style={{ fontWeight: 600, color: '#e8e8e8', fontSize: '0.875rem' }}>{t.name}</div>
-                <div style={{ color: '#9a9490', fontSize: '0.8rem' }}>Assigned to {t.assignedTo.username} • {t.status}</div>
+                <div style={{ color: '#9a9490', fontSize: '0.8rem' }}>Assigned to {t.assignedTo?.username} • {t.status}</div>
               </div>
             ))}
           </div>
@@ -115,10 +115,10 @@ export default function GetTasksHR() {
           </p>
           <div className="data-card-meta-row">
             <span className="data-card-meta">
-              <span className="data-card-label">Assigned to</span>{t.assignedTo.username}
+              <span className="data-card-label">Assigned to</span>{t.assignedTo?.username ||'Pending'}
             </span>
             <span className="data-card-meta">
-              <span className="data-card-label">Created by</span>{t.createdBy.username}
+              <span className="data-card-label">Created by</span>{t.createdBy?.username ||'Pending'}
             </span>
             <span className="data-card-meta">
               <span className="data-card-label">Due</span>{fmt(t.dueDate)}

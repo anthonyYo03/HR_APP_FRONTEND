@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getAllTask } from '../../../types/task';
 import toast from 'react-hot-toast';
 
+
 const badge = (v: string) => {
   const m: Record<string, string> = { pending: 'pending', 'in-progress': 'in-progress', completed: 'completed', low: 'low', medium: 'medium', high: 'high' };
   return `badge-status badge-${m[v] || 'pending'}`;
@@ -69,7 +70,9 @@ export default function GetOneTaskEmployee() {
         <div className="detail-actions">
           <button className="btn-gold" onClick={() => navigate(`/employee/updateTaskStatus/${id}`, { state: { task } })}>Update Status</button>
         </div>
+        
       </div>
+      
     </div>
   );
 }
