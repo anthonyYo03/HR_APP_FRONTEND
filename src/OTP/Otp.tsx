@@ -53,6 +53,17 @@ export default function Otp() {
           <p className="reg-sub">
             {otp.email ? `We sent a code to ${otp.email}` : 'Enter the code sent to your email'}
           </p>
+          <div style={{ backgroundColor: '#f5f5f5', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', textAlign: 'center' }}>
+            <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#666', fontFamily: 'DM Sans, sans-serif' }}>
+              Your OTP Code:
+            </p>
+            <p style={{ margin: 0, fontSize: '1.8rem', fontWeight: 'bold', letterSpacing: '0.2em', color: '#e8c468', fontFamily: 'monospace' }}>
+              {otp.otp || '------'}
+            </p>
+            <p style={{ margin: '0.8rem 0 0 0', fontSize: '0.75rem', color: '#999', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.4' }}>
+              📧 You will not receive this OTP via email as this service is on the Resend free tier and cannot send emails at this time.
+            </p>
+          </div>
           <div className="reg-divider" />
           <form onSubmit={submitOTP}>
             <div className="reg-field">
