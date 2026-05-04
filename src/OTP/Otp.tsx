@@ -9,7 +9,7 @@ export default function Otp() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
-  const [otp, setOtp] = useState<UserOTP>({ email: location.state?.email || '', otp: '' });
+  const [otp, setOtp] = useState<UserOTP>({ email: location.state?.email || '', otp: location.state?.otp || '' });
 
   const submitOTP = async (e: React.FormEvent) => {
     e.preventDefault();

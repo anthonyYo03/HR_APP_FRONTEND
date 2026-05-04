@@ -41,13 +41,13 @@ export default function Register() {
     }
     setLoading(true);
     try {
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/user/register`,
         register,
         { withCredentials: true }
       );
       toast.success('Registered successfully');
-      setTimeout(() => navigate('/otp', { state: { email: register.email } }), 1000);
+      setTimeout(() => navigate('/otp', { state: { email: register.email, otp: response.data.otp } }), 1000);
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Cannot register user');
     } finally {
